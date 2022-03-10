@@ -1,0 +1,23 @@
+name: Test Lint Pass
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+concurrency: "test-lint-pass"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: SwiftLint
+        uses: raphaelbussa/swiftlint-action@main
+        with:
+          subcommand: lint --strict --path test/pass/

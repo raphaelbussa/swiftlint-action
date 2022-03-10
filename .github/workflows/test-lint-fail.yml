@@ -1,0 +1,33 @@
+name: Test Lint Fail
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+concurrency: "test-lint-fail"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: SwiftLint
+        id: lint
+        uses: raphaelbussa/swiftlint-action@main
+        continue-on-error: true
+        with:
+          subcommand: lint --strict --path test/fail/
+   
+      - name: Fail on passed lint
+        if: steps.lint.outcome == 'success'
+        run: exit 1
+      
+      - name: Success on failed lint
+        if: steps.lint.outcome == 'failure'
+        run: exit 0

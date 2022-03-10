@@ -1,0 +1,18 @@
+name: 'SwiftLint Action'
+description: 'Run SwiftLint on Github Actions'
+author: 'Raphaël Bussa'
+
+inputs: 
+  subcommand:
+    description: 'Add subcommand to use with swiftlint'
+    required: false
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.subcommand }}
+
+branding:
+  icon: 'code'  
+  color: 'red'
